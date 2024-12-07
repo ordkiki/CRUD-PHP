@@ -51,7 +51,7 @@
         }
 
         public function Remove_User_ById($id){
-            $sql = "DELETE Users WHERE id = :id";
+            $sql = "DELETE Users WHERE Id_user = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             if ($stmt->execute()) {
