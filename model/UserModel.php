@@ -41,5 +41,23 @@
             }
             return false;
         }
+        public function ListeAll(){
+            $sql = "SELECT * FROM Users";
+            $stmt = $this->conn->query($sql);
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            return false;
+        }
+
+        public function Remove_User_ById($id){
+            $sql = "DELETE Users WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        }
     }   
 ?>

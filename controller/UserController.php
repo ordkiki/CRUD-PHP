@@ -25,4 +25,15 @@ class UserController {
             echo json_encode(["message" => "Échec de la création"]);
         }
     }
+
+    public function Get_User()
+    {
+        $Users = $this->UserModel->ListeAll();
+        echo json_encode($Users);
+    }
+    public function Delete_user($id)
+    {
+        $Users = $this->UserModel->Remove_User_ById($id);
+        echo json_encode($Users);
+    }
 }
