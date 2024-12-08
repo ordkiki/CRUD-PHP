@@ -9,19 +9,38 @@
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
             $userController = new UserController();
-            $action = $_GET['action'] ?? null;
-
-            if ($action === 'create') {
-                $userController->Create();
-            } elseif ($action === 'delete') {
-                $id = $_GET['id'] ?? null;
-                if ($id) {
-                    $userController->Delete_user($id);
-                } else {
-                    echo json_encode(["message" => "ID manquant pour la suppression"]);
-                }
-            }
+            $userController->Create();
             break;
+
+
+            case 'DELETE':
+                try {
+                    $userController = new UserController();
+                    $id = $_GET['id'] ?? null;
+                    if ($userController->Delete_user($id)) {
+                        echo json_encode(["message" => "Utilisateur supprimé avec succès."]);
+                    } else {
+                        echo json_encode(["message" => "Échec de la suppression de l'utilisateur."]);
+                    }
+                } catch (\PDOException $e) {
+                    echo json_encode(["message" => "Erreur : " . $e->getMessage()]);
+                }
+                break;
+
+            case 'UPDATE':
+                try {
+                    $userController = new UserController();
+                    $id = $_GET['id'] ?? null;
+                    if ($userController->Put($id)) {
+                        echo json_encode(["message" => "Utilisateur supprimé avec succès."]);
+                    } else {
+                        echo json_encode(["message" => "Échec de la suppression de l'utilisateur."]);
+                    }
+                } catch (\PDOException $e) {
+                    echo json_encode(["message" => "Erreur : " . $e->getMessage()]);
+                }
+                break;
+
 
         case 'GET':
             $userController = new UserController();

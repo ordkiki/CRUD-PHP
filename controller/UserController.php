@@ -36,4 +36,9 @@ class UserController {
         $Users = $this->UserModel->Remove_User_ById($id);
         echo json_encode($Users);
     }
+    public function Put($id)
+    {
+        $Users = $this->UserModel->Remove_User_ById($id);
+        echo json_encode($Users);
+    }
 }

@@ -50,14 +50,18 @@
             return false;
         }
 
-        public function Remove_User_ById($id){
-            $sql = "DELETE Users WHERE Id_user = :id";
+        public function Remove_User_ById($id) {
+            $sql = "DELETE FROM Users WHERE Id_user = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                return true;
-            }
-            return false;
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
         }
+        public function Modify_userById($id) {
+            $sql = "UPDATE FROM Users WHERE Id_user = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        }
+        
     }   
 ?>
