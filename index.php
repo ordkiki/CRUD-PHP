@@ -11,7 +11,7 @@
             $userController = new UserController();
             $userController->Create();
             break;
-            
+
         case 'DELETE':
             try {
                 $userController = new UserController();
@@ -26,18 +26,18 @@
             }
             break;
 
-            case 'PUT':
-                parse_str(file_get_contents("php://input"), $data); // Parse les données du corps de la requête
-                $id = $_GET['id'] ?? null;
-                $userController = new UserController();
-            
-                if ($id && $userController->Put($id)) {
-                    echo json_encode(["message" => "Utilisateur mis à jour avec succès."]);
-                } else {
-                    echo json_encode(["message" => "Échec de la mise à jour."]);
-                }
-                break;
-            
+        case 'PUT':
+            parse_str(file_get_contents("php://input"), $data);
+            $id = $_GET['id'] ?? null;
+            $userController = new UserController();
+
+            if ($id && $userController->Put($id)) {
+                echo json_encode(["message" => "Utilisateur mis à jour avec succès."]);
+            } else {
+                echo json_encode(["message" => "Échec de la mise à jour."]);
+            }
+            break;
+
 
         case 'GET':
             $userController = new UserController();
