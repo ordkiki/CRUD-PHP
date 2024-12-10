@@ -11,42 +11,39 @@
             $userController = new UserController();
             $userController->Create();
             break;
+            
+        case 'DELETE':
+            try {
+                $userController = new UserController();
+                $id = $_GET['id'] ?? null;
+                if ($userController->Delete_user($id)) {
+                    echo json_encode(["message" => "Utilisateur supprimé avec succès."]);
+                } else {
+                    echo json_encode(["message" => "Échec de la suppression de l'utilisateur."]);
+                }
+            } catch (\PDOException $e) {
+                echo json_encode(["message" => "Erreur : " . $e->getMessage()]);
+            }
+            break;
 
-
-            case 'DELETE':
-                try {
-                    $userController = new UserController();
-                    $id = $_GET['id'] ?? null;
-                    if ($userController->Delete_user($id)) {
-                        echo json_encode(["message" => "Utilisateur supprimé avec succès."]);
-                    } else {
-                        echo json_encode(["message" => "Échec de la suppression de l'utilisateur."]);
-                    }
-                } catch (\PDOException $e) {
-                    echo json_encode(["message" => "Erreur : " . $e->getMessage()]);
+            case 'PUT':
+                parse_str(file_get_contents("php://input"), $data); // Parse les données du corps de la requête
+                $id = $_GET['id'] ?? null;
+                $userController = new UserController();
+            
+                if ($id && $userController->Put($id)) {
+                    echo json_encode(["message" => "Utilisateur mis à jour avec succès."]);
+                } else {
+                    echo json_encode(["message" => "Échec de la mise à jour."]);
                 }
                 break;
-
-            case 'UPDATE':
-                try {
-                    $userController = new UserController();
-                    $id = $_GET['id'] ?? null;
-                    if ($userController->Put($id)) {
-                        echo json_encode(["message" => "Utilisateur supprimé avec succès."]);
-                    } else {
-                        echo json_encode(["message" => "Échec de la suppression de l'utilisateur."]);
-                    }
-                } catch (\PDOException $e) {
-                    echo json_encode(["message" => "Erreur : " . $e->getMessage()]);
-                }
-                break;
-
+            
 
         case 'GET':
             $userController = new UserController();
             $userController->Get_User();
             break;
-        
+
         default:
             # code...
             echo json_encode(["message" => "Méthode non autorisée"]);

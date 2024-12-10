@@ -56,12 +56,18 @@
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
         }
-        public function Modify_userById($id) {
-            $sql = "UPDATE FROM Users WHERE Id_user = :id";
+        public function Modify_userById($data, $id) {
+            $sql = "UPDATE Users SET Nom = :Nom, Prenom = :Prenom, Email = :Email, Telephone = :Telephone WHERE Id_user = :id";
             $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':Nom', $data['Nom']);
+            $stmt->bindParam(':Prenom', $data['Prenom']);
+            $stmt->bindParam(':Email', $data['Email']);
+            $stmt->bindParam(':Telephone', $data['Telephone']);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
             return $stmt->execute();
         }
+        
         
     }   
 ?>

@@ -36,9 +36,23 @@ class UserController {
         $Users = $this->UserModel->Remove_User_ById($id);
         echo json_encode($Users);
     }
-    public function Put($id)
-    {
-        $Users = $this->UserModel->Remove_User_ById($id);
-        echo json_encode($Users);
+    public function Put($id) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (!isset($data['Nom'], $data['Prenom'], $data['Email'], $data['Telephone'])) {
+            echo json_encode(["message" => "Données invalides ou incomplètes."]);
+            http_response_code(400);
+            return;
+        }
+        
+
+        if ($this->UserModel->Modify_userById($data, $id)) {
+            echo json_encode([
+                "Nom"     => $data['Nom'],
+                "success" => true,
+                "message" => "Utilisateur mis à jour avec succès."
+            ]);
+        } else {
+            echo json_encode(["message" => "Échec de la Maj"]);
+        }
     }
 }
